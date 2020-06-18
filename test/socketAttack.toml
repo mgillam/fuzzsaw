@@ -1,0 +1,29 @@
+fuzz_type="sniper"
+word_list="words.txt"
+word_locations = [
+    { key="name", default="Mic" },
+    { key="age", default="40" }
+]
+global_vars = [
+    { key="date", value="today" }
+]
+
+[connection]
+type="websocket"
+endpoint="wss://localhost"
+inactivity_timeout=5000
+
+[[payloads]]
+template_src="inline"
+name="template1"
+
+[template1.variables]
+hostname="localhost"
+
+[template1]
+string='''
+{
+    "name": "{{it.name}}",
+    "age": "{{it.age}}"
+}
+'''

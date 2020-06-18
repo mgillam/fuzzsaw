@@ -1,0 +1,2 @@
+GET /?name={{it.name}}&age={{it.age}}
+Host: localhost
