@@ -9,7 +9,7 @@ import WorkCount from "./WorkCount";
 export default class FuzzManager<CA extends CommunicationAdapter> {
     templates: Function[];
     communicationConfig: Object;
-    dataProvider: Generator<Object, any, unknown>;
+    dataProvider: IterableIterator<Object>;
     outputAdapter: OutputAdapter;
     private workStartedCount: number = 0;
     private workFinishedCount: number = 0;
@@ -20,7 +20,7 @@ export default class FuzzManager<CA extends CommunicationAdapter> {
     constructor(ComAdapter : new (params: any) => CA,
             communicationConfig : Object,
             templates : Array<Function>,
-            dataProvider : Generator<Object>, 
+            dataProvider : IterableIterator<Object>, 
             outputAdapter : OutputAdapter = new ConsoleOutputAdapter()) {
         this.ComAdapter = ComAdapter;
         this.templates = templates;

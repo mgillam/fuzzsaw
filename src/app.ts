@@ -10,6 +10,8 @@ import { SqrlConfig } from 'squirrelly/dist/types/config'; */
 import * as TOML from '@iarna/toml';
 import { SequentialFuzzingStrategy } from './fuzzing/strategies/SequentialStrategy';
 import { FuzzingStrategy } from './fuzzing/strategies/FuzzingStrategy';
+import FuzzManager from './fuzzing/worker/FuzzManager';
+import { SocketAdapter } from './fuzzing/communication/SocketAdapter';
 
 let bannerOptions : Options = {};
 bannerOptions.horizontalLayout = 'full';
@@ -54,7 +56,11 @@ if (!process.argv.slice(2).length) {
       `));
     }
 
-    return strategy.execute(fuzzConfig);
+    let permutationGen : IterableIterator<Object> = strategy.getPermutations(fuzzConfig);
+
+    let fuzzingManager = new FuzzManager(SocketAdapter, args.config.communication, [], permutationGen);
+    fuzzingManager.start(2);
+    //return strategy.get'(fuzzConfig);
  
   }).then((msg) => {
     console.log(msg);
